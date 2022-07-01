@@ -3,7 +3,6 @@ package hubspot
 import (
 	"github.com/leonelquinteros/gorand"
 	"github.com/stretchr/testify/suite"
-	"os"
 	"strings"
 	"testing"
 )
@@ -18,8 +17,7 @@ func TestContactsTestSuite(t *testing.T) {
 }
 
 func (c *ContactsTestSuite) SetupTest() {
-	_ = os.Setenv("HUBSPOT_API_KEY", "12c3033c-718e-42ec-b68d-e88ae6ef5e29")
-	c.client = NewClient(NewClientConfig())
+	c.client = NewClient(NewClientConfig(ApiHost, ApiKey))
 }
 
 func (c *ContactsTestSuite) TestContacts() {
