@@ -49,7 +49,7 @@ func (c students) AddStudentToSchool(studentAccount string, studentName string, 
 		"studentAccount": country + "-" + studentAccount,
 		"studentName":    studentName,
 	}
-	err := c.client.Request("POST", "/partner/api/course.api.php?action=addSchoolStudent", params, &r, school)
+	err := c.client.request("POST", "/partner/api/course.api.php?action=addSchoolStudent", params, &r, school)
 	return r, err
 }
 
@@ -60,7 +60,7 @@ func (c students) ChangeStudentName(classinAccountId string, studentName string,
 		"studentUid":  classinAccountId,
 		"studentName": studentName,
 	}
-	err := c.client.Request("POST", "/partner/api/course.api.php?action=editSchoolStudent", params, &r, school)
+	err := c.client.request("POST", "/partner/api/course.api.php?action=editSchoolStudent", params, &r, school)
 	return r, err
 }
 
@@ -74,7 +74,7 @@ func (c students) ChangeStudentPassword(accountId string, phone string, newPassw
 		"telephone": country + "-" + phone,
 	}
 
-	err := c.client.Request("POST", "/partner/api/course.api.php?action=modifyPasswordByTelephone", params, &r, school)
+	err := c.client.request("POST", "/partner/api/course.api.php?action=modifyPasswordByTelephone", params, &r, school)
 	return r, err
 }
 
@@ -87,7 +87,7 @@ func (c students) AddStudentToCourse(accountId string, courseId string, studentN
 		"studentUid":  accountId,
 		"studentName": studentName,
 	}
-	err := c.client.Request("POST", "/partner/api/course.api.php?action=addCourseStudent", params, &r, school)
+	err := c.client.request("POST", "/partner/api/course.api.php?action=addCourseStudent", params, &r, school)
 	return r, err
 }
 
@@ -99,7 +99,7 @@ func (c students) RegisterAccountId(phoneNumber string, contactId string, school
 		"telephone": classinCountry + "-" + phoneNumber,
 		"password":  contactId + DefaultPasswordSuffix,
 	}
-	err := c.client.Request("POST", "/partner/api/course.api.php?action=register", params, &r, school)
+	err := c.client.request("POST", "/partner/api/course.api.php?action=register", params, &r, school)
 	return r, err
 }
 
@@ -115,6 +115,6 @@ func (c students) RemoveStudentInCourse(accountUids []string, courseId string, s
 	}
 	paramsByte, _ := json.Marshal(params)
 	fmt.Println(string(paramsByte))
-	err := c.client.Request("POST", "/partner/api/course.api.php?action=delCourseStudentMultiple", params, &r, school)
+	err := c.client.request("POST", "/partner/api/course.api.php?action=delCourseStudentMultiple", params, &r, school)
 	return r, err
 }

@@ -30,14 +30,22 @@ type ClientConfig struct {
 	SecretSchool1 string
 	SIDSchool2    string
 	SecretSchool2 string
-	HTTPTimeout   time.Duration
-	DialTimeout   time.Duration
-	TLSTimeout    time.Duration
+	HTTPClient    *http.Client
 }
 
 func NewClientConfig(apiHost, sidSchool1, secretSchool1, sidSchool2, secretSchool2 string) ClientConfig {
 	if apiHost == "" {
 		apiHost = Host
+	}
+	httpClient := &http.Client{
+		Timeout: 10 * time.Second,
+		Transport: &http.Transport{
+			//Dial: (&net.Dialer{
+			//	Timeout: c.config.DialTimeout,
+			//}).Dial,
+			IdleConnTimeout:     5 * time.Second,
+			TLSHandshakeTimeout: 5 * time.Second,
+		},
 	}
 	r := ClientConfig{
 		SIDSchool1:    sidSchool1,
@@ -45,9 +53,7 @@ func NewClientConfig(apiHost, sidSchool1, secretSchool1, sidSchool2, secretSchoo
 		SIDSchool2:    sidSchool2,
 		SecretSchool2: secretSchool2,
 		ApiHost:       apiHost,
-		HTTPTimeout:   10 * time.Second,
-		DialTimeout:   5 * time.Second,
-		TLSTimeout:    5 * time.Second,
+		HTTPClient:    httpClient,
 	}
 	return r
 }
@@ -58,7 +64,6 @@ type client struct {
 }
 
 type Client interface {
-	Request(method, endpoint string, data map[string]string, response interface{}, school int) error
 	Students() Students
 	GetMessage(code int) string
 }
@@ -71,11 +76,9 @@ func NewClient(config ClientConfig) Client {
 }
 
 // Request executes any Classin API method using the current client configuration
-func (c client) Request(method, endpoint string, data map[string]string, response interface{}, school int) error {
-
+func (c client) request(method, endpoint string, data map[string]string, response interface{}, school int) error {
 	// Init request object
 	var req *http.Request
-
 	timeStamp := strconv.Itoa(int(math.Round(float64(time.Now().Unix()))))
 	v := url.Values{}
 	if school == 2 {
@@ -100,26 +103,16 @@ func (c client) Request(method, endpoint string, data map[string]string, respons
 	if err != nil {
 		return fmt.Errorf("classin.Client.go.Request(): http.NewRequest(): %v", err)
 	}
-
 	// Headers
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	// Execute and read response body
-	netClient := &http.Client{
-		Timeout: c.config.HTTPTimeout,
-		Transport: &http.Transport{
-			IdleConnTimeout:     c.config.DialTimeout,
-			TLSHandshakeTimeout: c.config.TLSTimeout,
-		},
-	}
 	fmt.Println(req.Form.Encode())
-
-	resp, err := netClient.Do(req)
+	resp, err := c.config.HTTPClient.Do(req)
 	if err != nil {
 		return fmt.Errorf("classin.Client.go.Request(): Do(req): %v", err)
 	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
-
 	if err != nil {
 		return fmt.Errorf("classin.Client.go.Request(): ioutil.ReadAll(): %v", err)
 	}
