@@ -94,11 +94,18 @@ func (c *client) request(method, endpoint string, data, response interface{}, pa
 	if err != nil {
 		return fmt.Errorf("hubspot.Client.go.Request(): buildUri error: %v", err)
 	}
-	// Build body payload data
-	bodyPayload, _ := c.buildBodyRequest(data)
-	// Create new request (maybe with no bodyPayload)
 	var req *http.Request
-	req, err = http.NewRequest(method, uri, bodyPayload)
+	// Build body payload data
+	var bodyPayload *bytes.Buffer
+
+	if data != nil {
+		bodyPayload, _ = c.buildBodyRequest(data)
+		req, err = http.NewRequest(method, uri, bodyPayload)
+	} else {
+		req, err = http.NewRequest(method, uri, nil)
+	}
+	// Create new request (maybe with no bodyPayload)
+
 	if err != nil {
 		return fmt.Errorf("hubspot.Client.go.Request(): http.NewRequest(): %v", err)
 	}
@@ -108,11 +115,13 @@ func (c *client) request(method, endpoint string, data, response interface{}, pa
 	if c.config.APIKey == "" && c.config.OAuthToken != "" {
 		req.Header.Add("Authorization", "Bearer "+c.config.OAuthToken)
 	}
+	
 	// Execute and read response body
 	resp, err := c.config.HTTPClient.Do(req)
 	if err != nil {
 		return fmt.Errorf("hubspot.Client.go.Request(): c.config.HTTPClient.Do(): %v", err)
 	}
+	
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
