@@ -14,7 +14,7 @@ import (
 
 const (
 	ApiHost = "https://api.hubapi.com"
-	ApiKey  = "DESC"
+	ApiKey  = "12c3033c-718e-42ec-b68d-e88ae6ef5e29"
 )
 
 // ClientConfig object used for client creation
