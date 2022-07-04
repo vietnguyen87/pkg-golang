@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -96,14 +97,8 @@ func (c *client) request(method, endpoint string, data, response interface{}, pa
 	}
 	var req *http.Request
 	// Build body payload data
-	var bodyPayload *bytes.Buffer
-
-	if data != nil {
-		bodyPayload, _ = c.buildBodyRequest(data)
-		req, err = http.NewRequest(method, uri, bodyPayload)
-	} else {
-		req, err = http.NewRequest(method, uri, nil)
-	}
+	bodyPayload, _ := c.buildBodyRequest(data)
+	req, err = http.NewRequest(method, uri, bodyPayload)
 	// Create new request (maybe with no bodyPayload)
 
 	if err != nil {
@@ -115,13 +110,13 @@ func (c *client) request(method, endpoint string, data, response interface{}, pa
 	if c.config.APIKey == "" && c.config.OAuthToken != "" {
 		req.Header.Add("Authorization", "Bearer "+c.config.OAuthToken)
 	}
-	
+
 	// Execute and read response body
 	resp, err := c.config.HTTPClient.Do(req)
 	if err != nil {
 		return fmt.Errorf("hubspot.Client.go.Request(): c.config.HTTPClient.Do(): %v", err)
 	}
-	
+
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
@@ -166,7 +161,7 @@ func (c *client) buildUri(endpoint string, params []string) (uri string, err err
 	return uri, nil
 }
 
-func (c *client) buildBodyRequest(data interface{}) (body *bytes.Buffer, err error) {
+func (c *client) buildBodyRequest(data interface{}) (body io.Reader, err error) {
 	if data == nil {
 		return nil, fmt.Errorf("hubspot.Client.go.Request() with nil data")
 	}
