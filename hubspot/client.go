@@ -63,6 +63,7 @@ type Client interface {
 	Deals() Deals
 	LineItems() LineItems
 	Products() Products
+	Notes() Notes
 }
 
 // NewClient constructor

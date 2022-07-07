@@ -16,6 +16,9 @@
 # vendor/
 vendor/
 
+#mocks
+mocks/
+
 # JetBrains
 .idea/
 
