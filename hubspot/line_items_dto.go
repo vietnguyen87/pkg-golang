@@ -49,3 +49,25 @@ type GetLineItemsByIdsResponse struct {
 	Status  string              `json:"status"`
 	Results []LineItemsResponse `json:"results"`
 }
+
+// LineItemAssociateResponse object
+type LineItemAssociateResponse struct {
+	ErrorResponse
+	Id           string            `json:"id"`
+	Properties   LineItemsProperty `json:"properties"`
+	CreatedAt    string            `json:"createdAt"`
+	UpdatedAt    string            `json:"updatedAt"`
+	Archived     bool              `json:"archived"`
+	Associations Associations      `json:"associations"`
+}
+
+type LineItemAssociationDeal struct {
+	Deals LineItemAssociationDealProperty `json:"deals"`
+}
+type LineItemAssociationDealProperty struct {
+	Results []LineItemAssociationDealResult `json:"results"`
+}
+type LineItemAssociationDealResult struct {
+	Id   string `json:"id"`
+	Type string `json:"type"`
+}

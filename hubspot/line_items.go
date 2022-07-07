@@ -13,6 +13,7 @@ type LineItems interface {
 	GetByIds(ids []string) (GetLineItemsByIdsResponse, error)
 	Update(lineItem string, data LineItemsRequest) (LineItemsResponse, error)
 	Delete(lineItemId string) error
+	AssociateLineItemToDeal(lineItemId string, dealId string) (LineItemAssociateResponse, error)
 }
 
 // LineItems constructor (from Client)
@@ -71,4 +72,19 @@ func (l *lineItems) Update(lineItem string, data LineItemsRequest) (LineItemsRes
 func (l *lineItems) Delete(lineItemId string) error {
 	err := l.client.request("DELETE", "/crm/v3/objects/line_items/"+lineItemId, nil, nil, nil)
 	return err
+}
+
+// AssociateLineItemToDeal Create new Line Items
+func (l *lineItems) AssociateLineItemToDeal(lineItemId string, dealId string) (LineItemAssociateResponse, error) {
+	r := LineItemAssociateResponse{}
+	err := l.client.request("PUT",
+		fmt.Sprintf("/crm/v3/objects/line_items/%s/associations/DEAL/%s/line_item_to_deal",
+			lineItemId,
+			dealId,
+		),
+		nil,
+		&r,
+		nil,
+	)
+	return r, err
 }
