@@ -15,6 +15,7 @@ type ContactsRequestProperty struct {
 	ClassinAccountId      string `json:"classin_account_id,omitempty" example:"biglytics.net"`
 	ClassinVirtualAccount string `json:"classin_virtual_account,omitempty" example:"biglytics.net"`
 	ClassinPassword       string `json:"classin_password,omitempty" example:"biglytics.net"`
+	SubjectTobeRenewed    string `json:"subject_to_be_renewed,omitempty" example:"biglytics.net"`
 }
 
 // ContactsResponse object
