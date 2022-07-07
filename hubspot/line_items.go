@@ -13,7 +13,7 @@ type LineItems interface {
 	GetByIds(ids []string) (GetLineItemsByIdsResponse, error)
 	Update(lineItem string, data LineItemsRequest) (LineItemsResponse, error)
 	Delete(lineItemId string) error
-	AssociateLineItemToDeal(lineItemId string, dealId string) (LineItemAssociateResponse, error)
+	Associate(lineItemId, toObjectType, toObjectId, associationType string) (LineItemAssociateResponse, error)
 }
 
 // LineItems constructor (from Client)
@@ -74,13 +74,17 @@ func (l *lineItems) Delete(lineItemId string) error {
 	return err
 }
 
-// AssociateLineItemToDeal Create new Line Items
-func (l *lineItems) AssociateLineItemToDeal(lineItemId string, dealId string) (LineItemAssociateResponse, error) {
+// Associate Create new Line Items
+// toObjectType: DEAL
+// associationType: line_item_to_deal
+func (l *lineItems) Associate(lineItemId, toObjectType, toObjectId, associationType string) (LineItemAssociateResponse, error) {
 	r := LineItemAssociateResponse{}
 	err := l.client.request("PUT",
-		fmt.Sprintf("/crm/v3/objects/line_items/%s/associations/DEAL/%s/line_item_to_deal",
+		fmt.Sprintf("/crm/v3/objects/line_items/%s/associations/%s/%s/%s",
 			lineItemId,
-			dealId,
+			toObjectType,
+			toObjectId,
+			associationType,
 		),
 		nil,
 		&r,
