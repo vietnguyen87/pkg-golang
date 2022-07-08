@@ -36,8 +36,8 @@ func (l *lineItems) Get(lineItemId string) (LineItemResponse, error) {
 		"properties=subject",
 		"properties=sku_code",
 		"properties=sku_type",
-		"properties=unit_price",
 		"properties=amount",
+		"properties=number_of_units",
 	}
 	err := l.client.request("GET", fmt.Sprintf("/crm/v3/objects/line_items/%v", lineItemId), nil, &r, params)
 	return r, err

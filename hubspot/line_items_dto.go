@@ -13,7 +13,7 @@ type LineItemsProperty struct {
 	Recurringbillingfrequency string `json:"recurringbillingfrequency"`
 	Quantity                  string `json:"quantity"`
 	Price                     string `json:"price"`
-	UnitPrice                 string `json:"unit_price"`
+	NumberOfUnits             string `json:"number_of_units"`
 	Amount                    string `json:"amount"`
 	HsSku                     string `json:"hs_sku"`
 	SkuCode                   string `json:"sku_code"`
