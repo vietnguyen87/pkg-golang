@@ -38,6 +38,7 @@ func (l *lineItems) Get(lineItemId string) (LineItemResponse, error) {
 		"properties=sku_type",
 		"properties=amount",
 		"properties=number_of_units",
+		"properties=type_of_unit",
 	}
 	err := l.client.request("GET", fmt.Sprintf("/crm/v3/objects/line_items/%v", lineItemId), nil, &r, params)
 	return r, err
@@ -70,6 +71,7 @@ func (l *lineItems) GetByIds(ids []string) (GetLineItemsByIdsResponse, error) {
 			"sku_type",
 			"amount",
 			"number_of_units",
+			"type_of_unit",
 		},
 	}
 	err := l.client.request("POST", "/crm/v3/objects/line_items/batch/read", data, &r, nil)

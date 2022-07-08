@@ -14,6 +14,7 @@ type LineItemsProperty struct {
 	Quantity                  string `json:"quantity"`
 	Price                     string `json:"price"`
 	NumberOfUnits             string `json:"number_of_units"`
+	TypeOfUnit                string `json:"type_of_unit"`
 	Amount                    string `json:"amount"`
 	HsSku                     string `json:"hs_sku"`
 	SkuCode                   string `json:"sku_code"`
