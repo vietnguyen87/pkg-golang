@@ -13,8 +13,11 @@ type LineItemsProperty struct {
 	Recurringbillingfrequency string `json:"recurringbillingfrequency"`
 	Quantity                  string `json:"quantity"`
 	Price                     string `json:"price"`
+	UnitPrice                 string `json:"unit_price"`
+	Amount                    string `json:"amount"`
 	HsSku                     string `json:"hs_sku"`
 	SkuCode                   string `json:"sku_code"`
+	SkuType                   string `json:"sku_type"`
 	StartDate                 string `json:"start_date"`
 	EndDate                   string `json:"end_date"`
 	Subject                   string `json:"subject"`
