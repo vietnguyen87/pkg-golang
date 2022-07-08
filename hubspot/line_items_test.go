@@ -152,7 +152,7 @@ func TestAssociationLineItemToDeal(t *testing.T) {
 func TestGetLineItem(t *testing.T) {
 	client := NewClient(NewClientConfig(ApiHost, ApiKey))
 	t.Run("AssociateLineItemToDeal", func(t *testing.T) {
-		r, _ := client.LineItems().Get("3362963209")
+		r, _ := client.LineItems().GetByIds([]string{"3362963209"})
 		rByte, _ := json.Marshal(r)
 		fmt.Println(string(rByte))
 	})

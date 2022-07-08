@@ -57,8 +57,20 @@ func (l *lineItems) GetByIds(ids []string) (GetLineItemsByIdsResponse, error) {
 		inputs = append(inputs, GetByIdsLineItemsInput{Id: v})
 	}
 	data := GetByIdsLineItemsRequest{
-		Inputs:     inputs,
-		Properties: []string{"course_id", "hs_sku", "start_date", "end_date", "name", "quantity", "subject"},
+		Inputs: inputs,
+		Properties: []string{
+			"course_id",
+			"hs_sku",
+			"start_date",
+			"end_date",
+			"name",
+			"quantity",
+			"subject",
+			"sku_code",
+			"sku_type",
+			"amount",
+			"number_of_units",
+		},
 	}
 	err := l.client.request("POST", "/crm/v3/objects/line_items/batch/read", data, &r, nil)
 	return r, err
