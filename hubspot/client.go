@@ -4,19 +4,29 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/gin-gonic/gin/binding"
+	"gitlab.marathon.edu.vn/pkg/go/hubspot/builder"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"path"
+	"strconv"
 	"strings"
 	"time"
 )
 
 const (
-	ApiHost = "https://api.hubapi.com"
-	ApiKey  = "12c3033c-718e-42ec-b68d-e88ae6ef5e29"
+	ApiHost         = "https://api.hubapi.com"
+	ApiForm         = "https://forms.hubspot.com"
+	ApiKey          = "12c3033c-718e-42ec-b68d-e88ae6ef5e29"
+	GroupPathHeader = "X-Group-Path"
 )
+
+type RequestOption struct {
+	Header    map[string]string
+	GroupPath string
+}
 
 // ClientConfig object used for client creation
 type ClientConfig struct {
@@ -64,6 +74,7 @@ type Client interface {
 	LineItems() LineItems
 	Products() Products
 	Notes() Notes
+	Forms() Forms
 }
 
 // NewClient constructor
@@ -99,6 +110,7 @@ func (c *client) request(method, endpoint string, data, response interface{}, pa
 	var req *http.Request
 	// Build body payload data
 	bodyPayload, _ := c.buildBodyRequest(data)
+
 	req, err = http.NewRequest(method, uri, bodyPayload)
 	// Create new request (maybe with no bodyPayload)
 
@@ -138,6 +150,47 @@ func (c *client) request(method, endpoint string, data, response interface{}, pa
 	return nil
 }
 
+// requestForm executes any Form HubSpot API method using the current client configuration
+func (c *client) submitForm(endpoint string, data url.Values, response interface{}) (statusCode int, err error) {
+	// Build URL
+	u, err := url.Parse(ApiForm)
+	if err != nil {
+		return statusCode, fmt.Errorf("url.Parse(): %v", err)
+	}
+	u.Path = path.Join(u.Path, endpoint)
+	// API Key authentication
+	uri := u.String()
+	if c.config.APIKey != "" {
+		uri, err = c.addAPIKey(uri)
+		if err != nil {
+			return statusCode, fmt.Errorf("c.addAPIKey(): %v", err)
+		}
+	}
+	if err != nil {
+		return statusCode, fmt.Errorf("hubspot.Client.go.Request(): buildUri error: %v", err)
+	}
+	stringData := data.Encode()
+	reqOpts := []RequestOption{
+		{
+			Header: map[string]string{
+				"Content-Type":   binding.MIMEPOSTForm,
+				"Content-Length": strconv.Itoa(len(stringData)),
+			},
+		},
+	}
+	header := c.getRequestHeader(reqOpts...)
+	req, err := builder.NewRequestBuilder().
+		WithMethod(http.MethodPost).
+		WithURL(uri).
+		WithHeaders(header).
+		WithFormBody(binding.MIMEPOSTForm, data).
+		BuildForm()
+	if err != nil {
+		return 0, err
+	}
+	return c.Do(req, response)
+}
+
 func (c *client) buildUri(endpoint string, params []string) (uri string, err error) {
 	// Construct endpoint URL
 	u, err := url.Parse(c.config.APIHost)
@@ -172,4 +225,40 @@ func (c *client) buildBodyRequest(data interface{}) (body io.Reader, err error) 
 		return nil, fmt.Errorf("json.Marshal(): %v", err)
 	}
 	return bytes.NewBuffer(dataEncoded), nil
+}
+
+func (c *client) Do(request *http.Request, target interface{}) (int, error) {
+	rsp, err := c.config.HTTPClient.Do(request)
+	if err != nil {
+		return 0, err
+	}
+	defer func() {
+		_ = rsp.Body.Close()
+	}()
+
+	bodyBytes, err := ioutil.ReadAll(rsp.Body)
+	if err != nil {
+		return 0, err
+	}
+
+	if len(bodyBytes) == 0 {
+		return rsp.StatusCode, nil
+	}
+
+	return rsp.StatusCode, json.Unmarshal(bodyBytes, target)
+}
+
+func (c *client) getRequestHeader(reqOpts ...RequestOption) map[string]string {
+	if len(reqOpts) == 0 {
+		return nil
+	}
+	reqOpt := reqOpts[0]
+	header := reqOpt.Header
+	if header == nil {
+		header = make(map[string]string)
+	}
+	if reqOpt.GroupPath != "" {
+		header[GroupPathHeader] = reqOpt.GroupPath
+	}
+	return header
 }
