@@ -16,6 +16,7 @@ type ContactsRequestProperty struct {
 	ClassinVirtualAccount string `json:"classin_virtual_account,omitempty" example:"biglytics.net"`
 	ClassinPassword       string `json:"classin_password,omitempty" example:"biglytics.net"`
 	SubjectTobeRenewed    string `json:"subject_to_be_renewed,omitempty" example:"biglytics.net"`
+	Grade                 string `json:"grade,omitempty" example:"biglytics.net"`
 }
 
 // ContactsResponse object
@@ -44,6 +45,7 @@ type ContactsResponseProperty struct {
 	ClassinAddDate        string `json:"classin_add_date"`
 	ClassinRemoveDate     string `json:"classin_remove_date"`
 	TypeOfUser            string `json:"type_of_user"`
+	Grade                 string `json:"grade"`
 }
 
 // AssociatedCompany object

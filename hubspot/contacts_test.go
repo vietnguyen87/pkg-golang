@@ -84,3 +84,37 @@ func (c *ContactsTestSuite) TestContacts() {
 	})
 
 }
+
+func (c *ContactsTestSuite) TestSearch() {
+	c.Run("Test Search contact by phone", func() {
+		c.SetupTest()
+		contacts, err := c.client.Contacts().Search(SearchContactRequest{
+			FilterGroups: []SearchContactFilterGroups{
+				{
+					Filters: []SearchContactFilter{
+						{
+							Value:        "0333993985",
+							PropertyName: "phone",
+							Operator:     "EQ",
+						},
+					},
+				},
+			},
+			Properties: []string{"firstname", "lastname", "phone", "grade"},
+			Limit:      1,
+			After:      0,
+		})
+		c.Suite.NoError(err)
+		c.Suite.Equal("0333993985", contacts.Results[0].Properties.Phone)
+	})
+}
+
+func (c *ContactsTestSuite) TestUpdate() {
+	c.Run("Test update contact successful", func() {
+		c.SetupTest()
+		data := ContactsRequest{}
+		data.Properties.Grade = "8"
+		err := c.client.Contacts().Update("47351", data)
+		c.Suite.NoError(err)
+	})
+}
