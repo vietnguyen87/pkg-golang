@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/stretchr/testify/suite"
 	"testing"
+	"time"
 )
 
 type LineItemsTestSuite struct {
@@ -142,8 +143,28 @@ func (c *LineItemsTestSuite) TestLineItems() {
 func TestAssociationLineItemToDeal(t *testing.T) {
 
 	client := NewClient(NewClientConfig(ApiHost, ApiKey))
+
 	t.Run("AssociateLineItemToDeal", func(t *testing.T) {
-		r, _ := client.LineItems().Associate("3347554912", "DEAL", "9421328172", "line_item_to_deal")
+		startDate := time.Now().Format("2006-01-02")
+		endDate := time.Now().AddDate(0, 2, 0).Format("2006-01-02")
+		rLineItem, _ := client.LineItems().Create(LineItemsRequest{
+			Properties: LineItemsProperty{
+				Name:          "Test new deal 1",
+				Amount:        "200000",
+				Price:         "200000",
+				Quantity:      "1",
+				HsSku:         "QOhKXdhc",
+				SkuCode:       "QOhKXdhc",
+				CourseId:      "FO0y",
+				SkuType:       "Recurring",
+				TypeOfUnit:    "Month",
+				NumberOfUnits: "1",
+				StartDate:     startDate,
+				EndDate:       endDate,
+			},
+		})
+
+		r, _ := client.LineItems().Associate(rLineItem.Id, "DEAL", "9421328172", "line_item_to_deal")
 		rByte, _ := json.Marshal(r)
 		fmt.Println(string(rByte))
 	})
