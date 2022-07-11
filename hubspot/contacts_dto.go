@@ -153,3 +153,16 @@ type GetByIdsContactsRequest struct {
 type GetByIdsContactsInput struct {
 	Id string `json:"id"`
 }
+type ContactAssociateProperties struct {
+	Createdate       string `json:"createdate,omitempty"`
+	HsObjectId       string `json:"hs_object_id,omitempty"`
+	Lastmodifieddate string `json:"lastmodifieddate,omitempty"`
+}
+type ContactAssociateResponse struct {
+	ErrorResponse
+	Id         string                     `json:"id"`
+	Properties ContactAssociateProperties `json:"properties"`
+	CreatedAt  string                     `json:"createdAt"`
+	UpdatedAt  string                     `json:"updatedAt"`
+	Archived   bool                       `json:"archived"`
+}

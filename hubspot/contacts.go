@@ -1,5 +1,7 @@
 package hubspot
 
+import "fmt"
+
 // ContactsHubspot Contacts interface
 type Contacts interface {
 	Get(contactID string) (ContactsResponse, error)
@@ -11,6 +13,7 @@ type Contacts interface {
 	UpdateByEmail(email string, data ContactsRequest) error
 	CreateOrUpdate(email string, data ContactsRequest) (CreateOrUpdateContactResponse, error)
 	Delete(contactID string) error
+	Associate(contactId, toObjectType, toObjectId, associationType string) (ContactAssociateResponse, error)
 }
 type contacts struct {
 	client
@@ -111,4 +114,23 @@ func (c *contacts) CreateOrUpdate(email string, data ContactsRequest) (CreateOrU
 // Delete Contact
 func (c *contacts) Delete(contactID string) error {
 	return c.client.request("DELETE", "/crm/v3/objects/contacts/"+contactID, nil, nil, nil)
+}
+
+// Associate Create new Line Items
+// toObjectType: DEAL
+// associationType: line_item_to_deal
+func (c *contacts) Associate(contactId, toObjectType, toObjectId, associationType string) (ContactAssociateResponse, error) {
+	r := ContactAssociateResponse{}
+	err := c.client.request("PUT",
+		fmt.Sprintf("/crm/v3/objects/contacts/%s/associations/%s/%s/%s",
+			contactId,
+			toObjectType,
+			toObjectId,
+			associationType,
+		),
+		nil,
+		&r,
+		nil,
+	)
+	return r, err
 }
