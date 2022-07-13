@@ -68,6 +68,7 @@ func (c *contacts) GetByIds(ids []string) (GetContactsByIdsResponse, error) {
 			"phone",
 			"classin_account_id",
 			"classin_account",
+			"classin_virtual_account",
 			"company",
 			"email",
 			"createdate",
