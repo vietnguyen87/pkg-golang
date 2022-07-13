@@ -1,6 +1,8 @@
 package hubspot
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/stretchr/testify/suite"
 	"testing"
 )
@@ -63,5 +65,15 @@ func (c *DealsTestSuite) TestDeals() {
 		err := c.client.Deals().Delete(id)
 
 		c.Suite.Equal(err, nil)
+	})
+}
+
+func TestGetLineItemsInDeal(t *testing.T) {
+	client := NewClient(NewClientConfig("https://api.hubapi.com", "6af298d2-be72-4246-94a6-5550063e251d"))
+
+	t.Run("Test get deal", func(t *testing.T) {
+		r, _ := client.Deals().Get("9055024951")
+		rByte, _ := json.Marshal(r)
+		fmt.Println(string(rByte))
 	})
 }

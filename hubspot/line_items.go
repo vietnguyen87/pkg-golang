@@ -39,6 +39,13 @@ func (l *lineItems) Get(lineItemId string) (LineItemResponse, error) {
 		"properties=amount",
 		"properties=number_of_units",
 		"properties=type_of_unit",
+		"properties=hs_pre_discount_amount",
+		"properties=hs_total_discount",
+		"properties=hs_line_item_currency_code",
+		"properties=hs_acv",
+		"properties=hs_cost_of_goods_sold",
+		"properties=hs_discount_percentage",
+		"properties=hs_tcv",
 	}
 	err := l.client.request("GET", fmt.Sprintf("/crm/v3/objects/line_items/%v", lineItemId), nil, &r, params)
 	return r, err
@@ -72,6 +79,13 @@ func (l *lineItems) GetByIds(ids []string) (GetLineItemsByIdsResponse, error) {
 			"amount",
 			"number_of_units",
 			"type_of_unit",
+			"hs_pre_discount_amount",
+			"hs_total_discount",
+			"hs_line_item_currency_code",
+			"hs_acv",
+			"hs_cost_of_goods_sold",
+			"hs_discount_percentage",
+			"hs_tcv",
 		},
 	}
 	err := l.client.request("POST", "/crm/v3/objects/line_items/batch/read", data, &r, nil)
