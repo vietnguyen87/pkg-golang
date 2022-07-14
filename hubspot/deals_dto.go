@@ -15,7 +15,8 @@ type DealsProperty struct {
 	Pipeline               string `json:"pipeline"`
 	AffiliateSName         string `json:"affiliate_s_name"`
 	QualifiedForCommission string `json:"qualified_for_commission"`
-	B2bOrderId             string `json:"b2b_order_id"`
+	B2bDealId              string `json:"b2b_deal_id"`
+	ApprovedCommission     string `json:"approved_commission"`
 }
 
 // DealsResponse object
