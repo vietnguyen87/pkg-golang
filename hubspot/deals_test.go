@@ -72,7 +72,7 @@ func TestGetLineItemsInDeal(t *testing.T) {
 	client := NewClient(NewClientConfig("https://api.hubapi.com", "6af298d2-be72-4246-94a6-5550063e251d"))
 
 	t.Run("Test get deal", func(t *testing.T) {
-		r, _ := client.Deals().Get("9055024951")
+		r, _ := client.Deals().Get("9525125961")
 		rByte, _ := json.Marshal(r)
 		fmt.Println(string(rByte))
 	})

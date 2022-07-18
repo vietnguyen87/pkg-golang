@@ -97,7 +97,7 @@ func (c students) RegisterAccountId(phoneNumber string, contactId string, school
 	classinCountry := "0065"
 	params := map[string]string{
 		"telephone": classinCountry + "-" + phoneNumber,
-		"password":  contactId + DefaultPasswordSuffix,
+		"password":  "classin123",
 	}
 	err := c.client.request("POST", "/partner/api/course.api.php?action=register", params, &r, school)
 	return r, err

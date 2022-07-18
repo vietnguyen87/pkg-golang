@@ -34,7 +34,7 @@ type LineItemsProperty struct {
 	EndDate                   string `json:"end_date"`
 	Subject                   string `json:"subject"`
 	Grade                     string `json:"grade"`
-	Teacher                   string `json:"teacher"`
+	Teacher                   string `json:"teacher_s_"`
 	CourseId                  string `json:"course_id"`
 	Discount                  string `json:"discount"`
 }
