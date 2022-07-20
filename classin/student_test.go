@@ -39,8 +39,20 @@ func TestClassinAccount(t *testing.T) {
 	//+65 20000511708
 	// pass: classin123
 	classinClient := NewClient(NewClientConfig(Host, SID1, Secret1, SID2, Secret2))
-	//result, _ := classinClient.Students().RegisterAccountId("20000511708", "20902101", 1)
+	//result, _ := classinClient.Students().RegisterAccountId("20004547010", "31343751", 1)
 	//fmt.Println(result)
-	result, _ := classinClient.Students().ChangeStudentName("51618090", "Test 0123", 2)
+	//resultSchool, _ := classinClient.Students().AddStudentToSchool("20004547002", "31348551", 2)
+	//fmt.Println(resultSchool)
+	////result, _ := classinClient.Students().AddStudentToCourse("52551944", "Lê Trần Minh Khuê\n", 1)
+	////fmt.Println(result)
+	//resultStudentName, _ := classinClient.Students().ChangeStudentName("52551928", "Truc Test", 2)
+	//fmt.Println(resultStudentName)
+	//newPass := "31343751" + "@Mrt"
+	//resultStudentPassword, _ := classinClient.Students().ChangeStudentPassword("52551944", "20004547010", newPass, 1)
+	//fmt.Println(resultStudentPassword)
+
+	result, _ := classinClient.Students().AddStudentToCourse("52551944", "187821815", "Lê Trần Minh Khuê", 1)
 	fmt.Println(result)
+	//result, _ := classinClient.Students().Ađ("20004547002", "31348551", 2)
+
 }

@@ -67,7 +67,6 @@ func (c *DealsTestSuite) TestDeals() {
 		c.Suite.Equal(err, nil)
 	})
 }
-
 func TestGetLineItemsInDeal(t *testing.T) {
 	client := NewClient(NewClientConfig("https://api.hubapi.com", "6af298d2-be72-4246-94a6-5550063e251d"))
 

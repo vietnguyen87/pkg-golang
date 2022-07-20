@@ -13,6 +13,7 @@ type LineItems interface {
 	GetByIds(ids []string) (GetLineItemsByIdsResponse, error)
 	Update(lineItem string, data LineItemsRequest) (LineItemsResponse, error)
 	Delete(lineItemId string) error
+	GetProperties() (interface{}, error)
 	Associate(lineItemId, toObjectType, toObjectId, associationType string) (LineItemAssociateResponse, error)
 }
 
@@ -49,6 +50,7 @@ func (l *lineItems) Get(lineItemId string) (LineItemResponse, error) {
 		"properties=discount",
 		"properties=grade",
 		"properties=teacher_s_",
+		"properties=price",
 	}
 	err := l.client.request("GET", fmt.Sprintf("/crm/v3/objects/line_items/%v", lineItemId), nil, &r, params)
 	return r, err
@@ -90,6 +92,8 @@ func (l *lineItems) GetByIds(ids []string) (GetLineItemsByIdsResponse, error) {
 			"hs_discount_percentage",
 			"discount",
 			"hs_tcv",
+			"hs_margin_tcv",
+			"price",
 			"grade",
 			"teacher_s_",
 		},
@@ -127,5 +131,12 @@ func (l *lineItems) Associate(lineItemId, toObjectType, toObjectId, associationT
 		&r,
 		nil,
 	)
+	return r, err
+}
+
+// Get properties
+func (l *lineItems) GetProperties() (interface{}, error) {
+	var r interface{}
+	err := l.client.request("GET", fmt.Sprintf("/crm/v3/properties/line_item"), nil, &r, nil)
 	return r, err
 }
