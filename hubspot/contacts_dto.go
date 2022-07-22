@@ -17,6 +17,7 @@ type ContactsRequestProperty struct {
 	ClassinPassword       string `json:"classin_password,omitempty" example:"biglytics.net"`
 	SubjectTobeRenewed    string `json:"subject_to_be_renewed,omitempty" example:"biglytics.net"`
 	Grade                 string `json:"grade,omitempty" example:"biglytics.net"`
+	GradeNew              string `json:"grade_new,omitempty" example:"biglytics.net"`
 	InterestOnSubjects    string `json:"interest_on_subjects,omitempty" example:"biglytics.net"`
 }
 
