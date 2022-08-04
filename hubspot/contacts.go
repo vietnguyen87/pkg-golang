@@ -2,7 +2,7 @@ package hubspot
 
 import "fmt"
 
-// ContactsHubspot Contacts interface
+// Contacts ContactsHubspot interface
 type Contacts interface {
 	Get(contactID string) (ContactsResponse, error)
 	Create(data ContactsRequest) (ContactsResponse, error)

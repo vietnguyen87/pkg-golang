@@ -75,6 +75,7 @@ type Client interface {
 	Products() Products
 	Notes() Notes
 	Forms() Forms
+	Engagements() Engagements
 }
 
 // NewClient constructor
