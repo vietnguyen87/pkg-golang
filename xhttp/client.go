@@ -21,7 +21,7 @@ const (
 
 type Client interface {
 	PostJSON(c context.Context, url string, data, target interface{}, reqOptions ...RequestOption) (int, error)
-	PostForm(c context.Context, url string, data, target interface{}, reqOptions ...RequestOption) (int, error)
+	PostForm(c context.Context, url string, data url.Values, target interface{}, reqOptions ...RequestOption) (int, error)
 	Get(c context.Context, url string, target interface{}, reqOptions ...RequestOption) (int, error)
 	GetWithQuery(c context.Context, url string, data, target interface{}, reqOptions ...RequestOption) (int, error)
 	GetWithoutEncodedQuery(c context.Context,
@@ -79,14 +79,14 @@ func (c *client) PostJSON(ctx context.Context,
 }
 
 func (c *client) PostForm(ctx context.Context,
-	url string, data, target interface{}, reqOpts ...RequestOption) (statusCode int, err error) {
+	url string, data url.Values, target interface{}, reqOpts ...RequestOption) (statusCode int, err error) {
 	header := c.getRequestHeader(reqOpts...)
 	req, err := NewRequestBuilderWithCtx(ctx).
 		WithMethod(http.MethodPost).
 		WithURL(url).
 		WithHeaders(header).
-		WithBody(MIMEPOSTForm, data).
-		Build()
+		WithFormBody(MIMEPOSTForm, data).
+		BuildForm()
 	if err != nil {
 		return
 	}
