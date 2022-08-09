@@ -5,6 +5,8 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
+	"net/url"
+	"strings"
 
 	"github.com/gin-gonic/gin/binding"
 )
@@ -18,6 +20,7 @@ type builder struct {
 	contentType string
 	headers     map[string]string
 	bodyData    interface{}
+	formData    url.Values
 }
 
 func NewRequestBuilder() *builder {
@@ -39,6 +42,14 @@ func (b *builder) WithMethod(method string) *builder {
 func (b *builder) WithBody(contentType string, data interface{}) *builder {
 	b.contentType = contentType
 	b.bodyData = data
+	b.headers[contentTypeField] = contentType
+	return b
+}
+
+func (b *builder) WithFormBody(contentType string, data url.Values) *builder {
+	b.contentType = contentType
+	b.bodyData = data
+	b.formData = data
 	b.headers[contentTypeField] = contentType
 	return b
 }
@@ -67,6 +78,17 @@ func (b *builder) Build() (req *http.Request, err error) {
 		return nil, err
 	}
 	req, err = http.NewRequestWithContext(b.context, b.method, b.url, bytes.NewReader(bodyByte))
+	if err != nil {
+		return nil, err
+	}
+	for k, v := range b.headers {
+		req.Header.Set(k, v)
+	}
+	return req, nil
+}
+
+func (b *builder) BuildForm() (req *http.Request, err error) {
+	req, err = http.NewRequestWithContext(b.context, b.method, b.url, strings.NewReader(b.formData.Encode()))
 	if err != nil {
 		return nil, err
 	}
