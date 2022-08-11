@@ -7,6 +7,7 @@ require (
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/google/go-querystring v1.1.0
 	github.com/leonelquinteros/gorand v1.0.2
+	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.12.2
 	github.com/sirupsen/logrus v1.6.0
 	github.com/stretchr/testify v1.8.0
