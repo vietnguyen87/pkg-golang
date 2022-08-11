@@ -41,22 +41,17 @@ func New(redisCmd xredis.Cmdable, opts ...Option) RedisCache {
 	}
 }
 
-func (r *redisCache) Get(ctx context.Context, key string, data interface{}) error {
+func (r *redisCache) Get(ctx context.Context, key string) (string, error) {
 	cacheKey := r.keyFn(key)
 	jsonData, err := r.redisCmd.Get(ctx, cacheKey).Result()
 	if err != nil {
 		if errors.Is(err, redis.Nil) {
-			return xerrors.NotFound.Newf("key [%s] not found", cacheKey)
+			return "", xerrors.NotFound.Newf("key [%s] not found", cacheKey)
 		}
 
-		return xerrors.CannotGetFromCache.Wrap(err, "failed to get data from cache")
+		return "", xerrors.CannotGetFromCache.Wrap(err, "failed to get data from cache")
 	}
-	err = r.serializer.Deserialize(jsonData, data)
-	if err != nil {
-		return xerrors.DeserializingError.Wrap(err, "failed to deserialize data from cache")
-	}
-
-	return nil
+	return jsonData, nil
 }
 
 func (r *redisCache) HGet(ctx context.Context, key, field string, data interface{}) error {
