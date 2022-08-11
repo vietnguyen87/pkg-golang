@@ -10,8 +10,14 @@ import (
 	"strconv"
 )
 
+const (
+	ApiOauth = "https://oauth.zaloapp.com/v4"
+	ApiZNS   = "https://business.openapi.zalo.me"
+)
+
 type Client interface {
 	RefreshAccessToken(ctx context.Context, refreshToken string) (schema.AccessTokenResp, error)
+	SendZNS(ctx context.Context, accessToken string, data interface{}) (schema.SendZNSResp, error)
 }
 
 // Client object
@@ -45,7 +51,7 @@ func NewClient(config ClientConfig) Client {
 }
 
 func (c *client) RefreshAccessToken(ctx context.Context, refreshToken string) (response schema.AccessTokenResp, err error) {
-	uri := fmt.Sprintf("%v/%v", c.config.APIHost, "oa/access_token")
+	uri := fmt.Sprintf("%v/%v", ApiOauth, "oa/access_token")
 	params := url.Values{}
 	params.Set("app_id", c.config.AppId)
 	params.Set("refresh_token", refreshToken)
@@ -61,5 +67,19 @@ func (c *client) RefreshAccessToken(ctx context.Context, refreshToken string) (r
 		},
 	}
 	_, err = c.config.client.PostForm(ctx, uri, params, &response, reqOptions...)
+	return response, err
+}
+
+func (c *client) SendZNS(ctx context.Context, accessToken string, data interface{}) (response schema.SendZNSResp, err error) {
+	uri := fmt.Sprintf("%v/%v", ApiZNS, "message/template")
+	reqOptions := []xhttp.RequestOption{
+		{
+			Header: map[string]string{
+				"access_token": accessToken,
+				"Content-Type": binding.MIMEJSON,
+			},
+		},
+	}
+	_, err = c.config.client.PostJSON(ctx, uri, data, &response, reqOptions...)
 	return response, err
 }

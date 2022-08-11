@@ -7,7 +7,7 @@ import (
 )
 
 type Cache interface {
-	Get(ctx context.Context, key string, data interface{}) error
+	Get(ctx context.Context, key string) (string, error)
 	Set(ctx context.Context, key string, data interface{}) error
 	SetWithExpiration(ctx context.Context, key string, data interface{}, expiration time.Duration) error
 	Delete(ctx context.Context, key string) error
