@@ -28,6 +28,9 @@ func (d *deals) Get(dealID string) (DealsResponse, error) {
 		"/crm/v3/objects/deals/%s", dealID), nil, &r, []string{
 		"associations=contacts",
 		"associations=line_items",
+		"properties=hubspot_owner_id",
+		"properties=dealstage",
+		"properties=pipeline",
 		"archived=false",
 	})
 	return r, err

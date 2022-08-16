@@ -23,13 +23,13 @@ func (c *EngagementsTestSuite) TestCreateEngagements() {
 	data := EngagementsRequest{
 		EngagementProperties{
 			Engagement: Engagement{
-				Active:    true,
-				OwnerId:   1,
+				Active: true,
+				//OwnerId:   1,
 				Type:      "TASK",
 				Timestamp: time.Now().UnixMilli(),
 			},
 			Associations: EngagementAssociations{
-				DealIds: []int64{9619060375},
+				DealIds: []int64{9798747735},
 			},
 			Metadata: Metadata{
 				Body:          "This is the body of the task.",

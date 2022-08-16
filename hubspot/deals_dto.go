@@ -7,16 +7,16 @@ type DealsRequest struct {
 
 // DealsProperty object
 type DealsProperty struct {
-	Amount                 string `json:"amount"`
-	Closedate              string `json:"closedate"`
-	Dealname               string `json:"dealname"`
-	Dealstage              string `json:"dealstage"`
-	HubspotOwnerId         string `json:"hubspot_owner_id"`
-	Pipeline               string `json:"pipeline"`
-	AffiliateSName         string `json:"affiliate_s_name"`
-	QualifiedForCommission string `json:"qualified_for_commission"`
-	B2bDealId              string `json:"b2b_deal_id"`
-	ApprovedCommission     string `json:"approved_commission"`
+	Amount                 string `json:"amount,omitempty"`
+	Closedate              string `json:"closedate,omitempty"`
+	Dealname               string `json:"dealname,omitempty"`
+	Dealstage              string `json:"dealstage,omitempty"`
+	HubspotOwnerId         string `json:"hubspot_owner_id,omitempty"`
+	Pipeline               string `json:"pipeline,omitempty"`
+	AffiliateSName         string `json:"affiliate_s_name,omitempty"`
+	QualifiedForCommission string `json:"qualified_for_commission,omitempty"`
+	B2bDealId              string `json:"b2b_deal_id,omitempty"`
+	ApprovedCommission     string `json:"approved_commission,omitempty"`
 }
 
 // DealsResponse object
