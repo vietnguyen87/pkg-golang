@@ -31,6 +31,11 @@ func (d *deals) Get(dealID string) (DealsResponse, error) {
 		"properties=hubspot_owner_id",
 		"properties=dealstage",
 		"properties=pipeline",
+		"properties=dealname",
+		"properties=createdate",
+		"properties=closedate",
+		"properties=amount",
+		"properties=createdate",
 		"archived=false",
 	})
 	return r, err
