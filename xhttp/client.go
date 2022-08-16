@@ -155,6 +155,7 @@ func (c *client) GetWithoutEncodedQuery(ctx context.Context,
 func (c *client) Do(ctx context.Context, request *http.Request, target interface{}) (int, error) {
 	if requestID := request.Header.Get(RequestIDHeader); requestID == "" {
 		request.Header.Set(RequestIDHeader, getContextIDFromCtx(ctx))
+		request.Header.Set(W3CTraceParentHeader, getContextIDFromCtx(ctx))
 	}
 	rsp, err := c.client.Do(request)
 	if err != nil {

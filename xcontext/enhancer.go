@@ -7,13 +7,13 @@ func (c ContextKey) String() string {
 }
 
 const (
-	KeyContextID ContextKey = "context_id"
-	KeyUserID    ContextKey = "user_id"
+	KeyContextID   ContextKey = "context_id"
+	KeyTraceParent ContextKey = "Traceparent"
 )
 
 var AllKeys = []ContextKey{
 	KeyContextID,
-	KeyUserID,
+	KeyTraceParent,
 }
 
 //func AttachContext(c context.Context, key ContextKey, value string) context.Context {
