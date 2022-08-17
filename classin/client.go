@@ -40,9 +40,6 @@ func NewClientConfig(apiHost, sidSchool1, secretSchool1, sidSchool2, secretSchoo
 	httpClient := &http.Client{
 		Timeout: 10 * time.Second,
 		Transport: &http.Transport{
-			//Dial: (&net.Dialer{
-			//	Timeout: c.config.DialTimeout,
-			//}).Dial,
 			IdleConnTimeout:     5 * time.Second,
 			TLSHandshakeTimeout: 5 * time.Second,
 		},
@@ -65,6 +62,7 @@ type client struct {
 
 type Client interface {
 	Students() Students
+	Courses() Courses
 	GetMessage(code int) string
 }
 
