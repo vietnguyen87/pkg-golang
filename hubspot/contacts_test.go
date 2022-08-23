@@ -113,8 +113,8 @@ func (c *ContactsTestSuite) TestUpdate() {
 	c.Run("Test update contact successful", func() {
 		c.SetupTest()
 		data := ContactsRequest{}
-		data.Properties.Grade = "8"
-		err := c.client.Contacts().Update("47351", data)
+		data.Properties.HistoricalSmsSend = "Introduce IELTS"
+		err := c.client.Contacts().Update("63701", data)
 		c.Suite.NoError(err)
 	})
 }

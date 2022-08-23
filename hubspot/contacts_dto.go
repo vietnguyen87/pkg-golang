@@ -19,6 +19,7 @@ type ContactsRequestProperty struct {
 	Grade                 string `json:"grade,omitempty" example:"biglytics.net"`
 	GradeNew              string `json:"grade_new,omitempty" example:"biglytics.net"`
 	InterestOnSubjects    string `json:"interest_on_subjects,omitempty" example:"biglytics.net"`
+	HistoricalSmsSend     string `json:"historical_sms_send,omitempty" example:"biglytics.net"`
 }
 
 // ContactsResponse object
