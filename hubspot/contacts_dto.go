@@ -20,6 +20,11 @@ type ContactsRequestProperty struct {
 	GradeNew              string `json:"grade_new,omitempty" example:"biglytics.net"`
 	InterestOnSubjects    string `json:"interest_on_subjects,omitempty" example:"biglytics.net"`
 	HistoricalSmsSend     string `json:"historical_sms_send,omitempty" example:"biglytics.net"`
+	UtmCampaign           string `json:"utm_campaign,omitempty" example:"biglytics.net"`
+	UtmContent            string `json:"utm_content,omitempty" example:"biglytics.net"`
+	UtmMedium             string `json:"utm_medium,omitempty" example:"biglytics.net"`
+	UtmSource             string `json:"utm_source,omitempty" example:"biglytics.net"`
+	UtmTerm               string `json:"utm_term,omitempty" example:"biglytics.net"`
 }
 
 // ContactsResponse object
