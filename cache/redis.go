@@ -125,13 +125,8 @@ func (r *redisCache) SetWithExpiration(ctx context.Context, key string, data int
 		expiration = r.expiration
 	}
 
-	jsonData, err := r.serializer.Serialize(data)
-	if err != nil {
-		return xerrors.SerializingError.Wrap(err, "failed to serialize data")
-	}
-
 	cacheKey := r.keyFn(key)
-	_, err = r.redisCmd.Set(ctx, cacheKey, jsonData, expiration).Result()
+	_, err := r.redisCmd.Set(ctx, cacheKey, data, expiration).Result()
 
 	if err != nil {
 		return xerrors.CannotSaveToCache.Wrap(err, "failed to save data to cache")
