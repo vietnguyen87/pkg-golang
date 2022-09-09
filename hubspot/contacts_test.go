@@ -17,6 +17,7 @@ func TestContactsTestSuite(t *testing.T) {
 }
 
 func (c *ContactsTestSuite) SetupTest() {
+	//c.client = NewClient(NewClientConfig(ApiHost, "6af298d2-be72-4246-94a6-5550063e251d"))
 	c.client = NewClient(NewClientConfig(ApiHost, ApiKey))
 }
 
@@ -85,6 +86,7 @@ func (c *ContactsTestSuite) TestContacts() {
 
 }
 
+//[IN, NOT_HAS_PROPERTY, LT, EQ, GT, NOT_IN, GTE, CONTAINS_TOKEN, HAS_PROPERTY, LTE, NOT_CONTAINS_TOKEN, BETWEEN, NEQ]
 func (c *ContactsTestSuite) TestSearch() {
 	c.Run("Test Search contact by phone", func() {
 		c.SetupTest()
@@ -93,15 +95,25 @@ func (c *ContactsTestSuite) TestSearch() {
 				{
 					Filters: []SearchContactFilter{
 						{
-							Value:        "0333993985",
-							PropertyName: "phone",
-							Operator:     "EQ",
+							Value:        "",
+							PropertyName: "classin_virtual_account",
+							Operator:     "HAS_PROPERTY",
+						},
+						{
+							Values:       []string{"opportunity", "salesqualifiedlead", "customer"},
+							PropertyName: "lifecyclestage",
+							Operator:     "IN",
+						},
+						{
+							Value:        "",
+							PropertyName: "invited_to_be_affiliate",
+							Operator:     "NOT_HAS_PROPERTY",
 						},
 					},
 				},
 			},
 			Properties: []string{"firstname", "lastname", "phone", "grade"},
-			Limit:      1,
+			Limit:      10,
 			After:      0,
 		})
 		c.Suite.NoError(err)
@@ -113,8 +125,8 @@ func (c *ContactsTestSuite) TestUpdate() {
 	c.Run("Test update contact successful", func() {
 		c.SetupTest()
 		data := ContactsRequest{}
-		data.Properties.HistoricalSmsSend = "Introduce IELTS"
-		err := c.client.Contacts().Update("63701", data)
+		data.Properties.DigitalTracking = "Digi_Google_namhoc2223_all_all_search_mon-anh"
+		err := c.client.Contacts().Update("64451", data)
 		c.Suite.NoError(err)
 	})
 }

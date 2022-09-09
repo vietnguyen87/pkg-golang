@@ -25,6 +25,8 @@ type ContactsRequestProperty struct {
 	UtmMedium             string `json:"utm_medium,omitempty" example:"biglytics.net"`
 	UtmSource             string `json:"utm_source,omitempty" example:"biglytics.net"`
 	UtmTerm               string `json:"utm_term,omitempty" example:"biglytics.net"`
+	DigitalTrackingStg    string `json:"digital_tracking,omitempty" example:"biglytics.net"`
+	DigitalTrackingProd   string `json:"doi_chi_vy_dat_ten,omitempty" example:"biglytics.net"`
 }
 
 // ContactsResponse object
