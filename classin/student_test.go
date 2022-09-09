@@ -17,7 +17,7 @@ func TestStudents(t *testing.T) {
 	//_ = contactId
 	//_ = phoneNumber
 	//_ = classinClient
-	result, _ := classinClient.Students().RegisterAccountId("20004507000", "5417001", 1)
+	result, _ := classinClient.Students().RegisterAccountId("20004507000", "5417001", 1, "0065")
 	if result.ErrorInfo.ErrNo != 1 && result.ErrorInfo.ErrNo != 135 {
 		assert.Error(t, errors.New(result.ErrorInfo.Error))
 	}

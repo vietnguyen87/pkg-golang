@@ -1,8 +1,6 @@
 package classin
 
 import (
-	"encoding/json"
-	"fmt"
 	"strings"
 )
 
@@ -11,11 +9,11 @@ type students struct {
 	client
 }
 type Students interface {
-	AddStudentToSchool(studentAccount string, studentName string, school int) (StudentResponse, error)
+	AddStudentToSchool(studentAccount string, studentName string, school int, country string) (StudentResponse, error)
 	ChangeStudentName(classinAccountId string, studentName string, school int) (StudentResponse, error)
-	ChangeStudentPassword(classinAccountId string, phone string, newPassword string, school int) (StudentResponse, error)
+	ChangeStudentPassword(classinAccountId string, phone string, newPassword string, school int, country string) (StudentResponse, error)
 	AddStudentToCourse(classinAccountId string, classinCourseId string, studentName string, school int) (StudentResponse, error)
-	RegisterAccountId(phoneNumber string, contactId string, school int) (StudentResponse, error)
+	RegisterAccountId(phoneNumber string, contactId string, school int, country string) (StudentResponse, error)
 	RemoveStudentInCourse(accountUid []string, courseId string, school int) (DeleteStudentsResponse, error)
 }
 
@@ -42,9 +40,11 @@ type DeleteStudentsResponse struct {
 }
 
 // AddStudentToSchool POST
-func (c students) AddStudentToSchool(studentAccount string, studentName string, school int) (StudentResponse, error) {
+func (c students) AddStudentToSchool(studentAccount string, studentName string, school int, country string) (StudentResponse, error) {
 	var r StudentResponse
-	country := Country
+	if country == "" {
+		country = Country
+	}
 	params := map[string]string{
 		"studentAccount": country + "-" + studentAccount,
 		"studentName":    studentName,
@@ -65,9 +65,11 @@ func (c students) ChangeStudentName(classinAccountId string, studentName string,
 }
 
 // ChangeStudentPassword POST
-func (c students) ChangeStudentPassword(accountId string, phone string, newPassword string, school int) (StudentResponse, error) {
+func (c students) ChangeStudentPassword(accountId string, phone string, newPassword string, school int, country string) (StudentResponse, error) {
 	var r StudentResponse
-	country := Country
+	if country == "" {
+		country = Country
+	}
 	params := map[string]string{
 		"uid":       accountId,
 		"password":  newPassword,
@@ -92,11 +94,13 @@ func (c students) AddStudentToCourse(accountId string, courseId string, studentN
 }
 
 // RegisterAccountId POST
-func (c students) RegisterAccountId(phoneNumber string, contactId string, school int) (StudentResponse, error) {
+func (c students) RegisterAccountId(phoneNumber string, contactId string, school int, country string) (StudentResponse, error) {
 	var r StudentResponse
-	classinCountry := "0065"
+	if country == "" {
+		country = Country
+	}
 	params := map[string]string{
-		"telephone": classinCountry + "-" + phoneNumber,
+		"telephone": country + "-" + phoneNumber,
 		"password":  "classin123",
 	}
 	err := c.client.request("POST", "/partner/api/course.api.php?action=register", params, &r, school)
@@ -113,8 +117,6 @@ func (c students) RemoveStudentInCourse(accountUids []string, courseId string, s
 		"identity":       "1",
 		"studentUidJson": studentUidJson,
 	}
-	paramsByte, _ := json.Marshal(params)
-	fmt.Println(string(paramsByte))
 	err := c.client.request("POST", "/partner/api/course.api.php?action=delCourseStudentMultiple", params, &r, school)
 	return r, err
 }
