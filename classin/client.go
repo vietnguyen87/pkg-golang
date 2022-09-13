@@ -63,6 +63,7 @@ type client struct {
 type Client interface {
 	Students() Students
 	Courses() Courses
+	Teachers() Teachers
 	GetMessage(code int) string
 }
 
