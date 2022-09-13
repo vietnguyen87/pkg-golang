@@ -5,7 +5,8 @@ type teachers struct {
 	client
 }
 type Teachers interface {
-	RegisterTeacher(phoneNumber string, contactId string, school int, country string) (TeacherResponse, error)
+	RegisterTeacher(phoneNumber string, password string, school int, country string) (TeacherResponse, error)
+	AddTeacher(phoneNumber string, name string, school int, country string) (TeacherResponse, error)
 }
 
 // Teachers constructor (from Client)
