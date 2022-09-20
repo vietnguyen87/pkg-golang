@@ -64,6 +64,7 @@ type Client interface {
 	Students() Students
 	Courses() Courses
 	Teachers() Teachers
+	Classes() Classes
 	GetMessage(code int) string
 }
 
