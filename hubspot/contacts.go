@@ -14,6 +14,7 @@ type Contacts interface {
 	CreateOrUpdate(email string, data ContactsRequest) (CreateOrUpdateContactResponse, error)
 	Delete(contactID string) error
 	Associate(contactId, toObjectType, toObjectId, associationType string) (ContactAssociateResponse, error)
+	GetList(after, limit string) (GetListContactResponse, error)
 }
 type contacts struct {
 	client
@@ -24,6 +25,24 @@ func (c client) Contacts() Contacts {
 	return &contacts{
 		client: c,
 	}
+}
+
+// Get List Contact
+func (c *contacts) GetList(after, limit string) (GetListContactResponse, error) {
+	r := GetListContactResponse{}
+	params := []string{
+		"propertiesWithHistory=ec_source",
+		"propertiesWithHistory=ec_status",
+		"propertiesWithHistory=lifecyclestage",
+		"propertiesWithHistory=recent_conversion_event_name",
+		"propertiesWithHistory=hs_latest_source",
+		"propertiesWithHistory=hs_latest_source_data_1",
+		"propertiesWithHistory=hs_latest_source_data_2",
+		"after=" + after,
+		"limit=" + limit,
+	}
+	err := c.client.request("GET", "/crm/v3/objects/contacts/", nil, &r, params)
+	return r, err
 }
 
 // Get Contact
