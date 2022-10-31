@@ -33,11 +33,29 @@ type ContactsRequestProperty struct {
 // ContactsResponse object
 type ContactsResponse struct {
 	ErrorResponse
-	Id         string                   `json:"id"`
-	Properties ContactsResponseProperty `json:"properties"`
-	CreatedAt  string                   `json:"createdAt"`
-	UpdatedAt  string                   `json:"updatedAt"`
-	Archived   bool                     `json:"archived"`
+	Id                    string                        `json:"id"`
+	Properties            ContactsResponseProperty      `json:"properties"`
+	PropertiesWithHistory ContactsPropertiesWithHistory `json:"propertiesWithHistory"`
+	CreatedAt             string                        `json:"createdAt"`
+	UpdatedAt             string                        `json:"updatedAt"`
+	Archived              bool                          `json:"archived"`
+}
+
+type ContactsPropertiesWithHistory struct {
+	ECSource                  []PropertiesResponse `json:"ec_source"`
+	ECStatus                  []PropertiesResponse `json:"ec_status"`
+	Lifecyclestage            []PropertiesResponse `json:"lifecyclestage"`
+	RecentConversionEventName []PropertiesResponse `json:"recent_conversion_event_name"`
+	HSLatestSource            []PropertiesResponse `json:"hs_latest_source"`
+	HSLatestSourceData1       []PropertiesResponse `json:"hs_latest_source_data_1"`
+	HSLatestSourceData2       []PropertiesResponse `json:"hs_latest_source_data_2"`
+}
+
+type PropertiesResponse struct {
+	Value      string `json:"value"`
+	Timestamp  string `json:"timestamp"`
+	SourceType string `json:"sourceType"`
+	SourceId   string `json:"sourceId"`
 }
 
 type ContactsResponseProperty struct {
@@ -57,6 +75,9 @@ type ContactsResponseProperty struct {
 	ClassinRemoveDate     string `json:"classin_remove_date"`
 	TypeOfUser            string `json:"type_of_user"`
 	Grade                 string `json:"grade"`
+	HsLatestSource        string `json:"hs_latest_source"`
+	HsLatestSource1       string `json:"hs_latest_source_1"`
+	HsLatestSource2       string `json:"hs_latest_source_2"`
 }
 
 // AssociatedCompany object
@@ -140,6 +161,11 @@ type SearchContactFilter struct {
 	Values       []string `json:"values,omitempty"`
 	PropertyName string   `json:"propertyName,omitempty"`
 	Operator     string   `json:"operator,omitempty"`
+}
+
+type GetListContactResponse struct {
+	Results []ContactsResponse `json:"results"`
+	Paging  ContactPagination  `json:"paging"`
 }
 
 type SearchContactResponse struct {
