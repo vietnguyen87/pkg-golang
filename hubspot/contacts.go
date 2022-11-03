@@ -38,6 +38,7 @@ func (c *contacts) GetList(after, limit string) (GetListContactResponse, error) 
 		"propertiesWithHistory=hs_latest_source",
 		"propertiesWithHistory=hs_latest_source_data_1",
 		"propertiesWithHistory=hs_latest_source_data_2",
+		"propertiesWithHistory=hubspot_owner_id",
 		"after=" + after,
 		"limit=" + limit,
 	}
@@ -60,6 +61,7 @@ func (c *contacts) Get(contactID string) (ContactsResponse, error) {
 		"properties=classin_add_date",
 		"properties=classin_remove_date",
 		"properties=type_of_user",
+		"properties=hubspot_owner_id",
 	}
 	err := c.client.request("GET", "/crm/v3/objects/contacts/"+contactID, nil, &r, params)
 	return r, err
@@ -95,6 +97,7 @@ func (c *contacts) GetByIds(ids []string) (GetContactsByIdsResponse, error) {
 			"lastmodifieddate",
 			"classin_add_date",
 			"classin_remove_date",
+			"hubspot_owner_id",
 		},
 	}
 	err := c.client.request("POST", "/crm/v3/objects/contacts/batch/read", data, &r, nil)
