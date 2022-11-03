@@ -78,6 +78,7 @@ type ContactsResponseProperty struct {
 	HsLatestSource        string `json:"hs_latest_source"`
 	HsLatestSource1       string `json:"hs_latest_source_1"`
 	HsLatestSource2       string `json:"hs_latest_source_2"`
+	HubspotOwnerId        string `json:"hubspot_owner_id"`
 }
 
 // AssociatedCompany object
