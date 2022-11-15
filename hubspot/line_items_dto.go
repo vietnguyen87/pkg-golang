@@ -37,6 +37,7 @@ type LineItemsProperty struct {
 	Teacher                   string `json:"teacher_s_"`
 	CourseId                  string `json:"course_id"`
 	Discount                  string `json:"discount"`
+	PromotionApply            string `json:"km_duo_c_a_p_du_ng"`
 }
 
 // LineItemsResponse object
