@@ -19,7 +19,7 @@ import (
 const (
 	ApiHost         = "https://api.hubapi.com"
 	ApiForm         = "https://forms.hubspot.com"
-	ApiKey          = "12c3033c-718e-42ec-b68d-e88ae6ef5e29"
+	ApiKey          = "pat-na1-2882bebd-dad5-4ad7-a4bd-6fac38de18e6"
 	GroupPathHeader = "X-Group-Path"
 )
 
@@ -86,7 +86,7 @@ func NewClient(config ClientConfig) Client {
 }
 
 // addAPIKey adds HUBSPOT_API_KEY param to a given URL.
-func (c *client) addAPIKey(u string) (string, error) {
+/*func (c *client) addAPIKey(u string) (string, error) {
 	if c.config.APIKey != "" {
 		uri, err := url.Parse(u)
 		if err != nil {
@@ -99,7 +99,7 @@ func (c *client) addAPIKey(u string) (string, error) {
 	}
 
 	return u, nil
-}
+}*/
 
 // Request executes any HubSpot API method using the current client configuration
 func (c *client) request(method, endpoint string, data, response interface{}, params []string) error {
@@ -120,10 +120,7 @@ func (c *client) request(method, endpoint string, data, response interface{}, pa
 	}
 	// Headers
 	req.Header.Add("Content-Type", "application/json")
-	// OAuth authentication
-	if c.config.APIKey == "" && c.config.OAuthToken != "" {
-		req.Header.Add("Authorization", "Bearer "+c.config.OAuthToken)
-	}
+	req.Header.Add("Authorization", "Bearer "+c.config.APIKey)
 
 	// Execute and read response body
 	resp, err := c.config.HTTPClient.Do(req)
@@ -161,12 +158,12 @@ func (c *client) submitForm(endpoint string, data url.Values, response interface
 	u.Path = path.Join(u.Path, endpoint)
 	// API Key authentication
 	uri := u.String()
-	if c.config.APIKey != "" {
+	/*if c.config.APIKey != "" {
 		uri, err = c.addAPIKey(uri)
 		if err != nil {
 			return statusCode, fmt.Errorf("c.addAPIKey(): %v", err)
 		}
-	}
+	}*/
 	if err != nil {
 		return statusCode, fmt.Errorf("hubspot.Client.go.Request(): buildUri error: %v", err)
 	}
@@ -174,6 +171,7 @@ func (c *client) submitForm(endpoint string, data url.Values, response interface
 	reqOpts := []RequestOption{
 		{
 			Header: map[string]string{
+				"Authorization":  "Bearer " + c.config.APIKey,
 				"Content-Type":   binding.MIMEPOSTForm,
 				"Content-Length": strconv.Itoa(len(stringData)),
 			},
@@ -201,12 +199,12 @@ func (c *client) buildUri(endpoint string, params []string) (uri string, err err
 	u.Path = path.Join(u.Path, endpoint)
 	// API Key authentication
 	uri = u.String()
-	if c.config.APIKey != "" {
+	/*if c.config.APIKey != "" {
 		uri, err = c.addAPIKey(uri)
 		if err != nil {
 			return uri, fmt.Errorf("c.addAPIKey(): %v", err)
 		}
-	}
+	}*/
 	if !strings.Contains(uri, "?") {
 		uri += "?temp="
 	}
