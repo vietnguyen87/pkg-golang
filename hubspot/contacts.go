@@ -62,6 +62,8 @@ func (c *contacts) Get(contactID string) (ContactsResponse, error) {
 		"properties=classin_remove_date",
 		"properties=type_of_user",
 		"properties=hubspot_owner_id",
+		"propertiesWithHistory=hs_user_ids_of_all_owners",
+		"propertiesWithHistory=hubspot_owner_assigneddate",
 	}
 	err := c.client.request("GET", "/crm/v3/objects/contacts/"+contactID, nil, &r, params)
 	return r, err

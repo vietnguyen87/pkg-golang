@@ -28,6 +28,7 @@ type ContactsRequestProperty struct {
 	UtmTerm               string `json:"utm_term,omitempty" example:"biglytics.net"`
 	DigitalTrackingStg    string `json:"digital_tracking,omitempty" example:"biglytics.net"`
 	DigitalTrackingProd   string `json:"doi_chi_vy_dat_ten,omitempty" example:"biglytics.net"`
+	HubspotOwnerId        string `json:"hubspot_owner_id,omitempty"  example:"biglytics.net"`
 }
 
 // ContactsResponse object
@@ -49,6 +50,8 @@ type ContactsPropertiesWithHistory struct {
 	HSLatestSource            []PropertiesResponse `json:"hs_latest_source"`
 	HSLatestSourceData1       []PropertiesResponse `json:"hs_latest_source_data_1"`
 	HSLatestSourceData2       []PropertiesResponse `json:"hs_latest_source_data_2"`
+	HSUserIdsOfAllOwner       []PropertiesResponse `json:"hs_user_ids_of_all_owners"`
+	HSOwnerAssignedDate       []PropertiesResponse `json:"hubspot_owner_assigneddate"`
 }
 
 type PropertiesResponse struct {
