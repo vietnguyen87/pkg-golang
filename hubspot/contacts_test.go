@@ -130,3 +130,11 @@ func (c *ContactsTestSuite) TestUpdate() {
 		c.Suite.NoError(err)
 	})
 }
+
+func (c *ContactsTestSuite) TestGet() {
+	c.Run("Test update contact successful", func() {
+		contact, _ := c.client.Contacts().Get("83401")
+		c.Suite.Equal(contact.Id, "83401")
+		c.Suite.NotEqual(contact.Properties.Firstname, "")
+	})
+}
