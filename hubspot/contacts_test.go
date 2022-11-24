@@ -125,8 +125,8 @@ func (c *ContactsTestSuite) TestUpdate() {
 	c.Run("Test update contact successful", func() {
 		c.SetupTest()
 		data := ContactsRequest{}
-		//data.Properties.DigitalTracking = "Digi_Google_namhoc2223_all_all_search_mon-anh"
-		err := c.client.Contacts().Update("64451", data)
+		data.Properties.HubspotOwnerId = "124023325"
+		err := c.client.Contacts().Update("83401", data)
 		c.Suite.NoError(err)
 	})
 }
