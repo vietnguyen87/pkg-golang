@@ -50,7 +50,7 @@ type ContactsPropertiesWithHistory struct {
 	HSLatestSource            []PropertiesResponse `json:"hs_latest_source"`
 	HSLatestSourceData1       []PropertiesResponse `json:"hs_latest_source_data_1"`
 	HSLatestSourceData2       []PropertiesResponse `json:"hs_latest_source_data_2"`
-	HSUserIdsOfAllOwner       []PropertiesResponse `json:"hs_user_ids_of_all_owners"`
+	HSOwnerIds                []PropertiesResponse `json:"hubspot_owner_id"`
 	HSOwnerAssignedDate       []PropertiesResponse `json:"hubspot_owner_assigneddate"`
 }
 
