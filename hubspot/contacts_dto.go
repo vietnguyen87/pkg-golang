@@ -11,6 +11,7 @@ type ContactsRequestProperty struct {
 	Firstname             string `json:"firstname,omitempty" example:"Bryan"`
 	Lastname              string `json:"lastname,omitempty" example:"Cooper"`
 	Phone                 string `json:"phone,omitempty" example:"(877) 929-0687"`
+	LDBAccount            string `json:"ldb_account,omitempty" example:"(877) 929-0687"`
 	Website               string `json:"website,omitempty" example:"biglytics.net"`
 	ClassinAccountId      string `json:"classin_account_id,omitempty" example:"biglytics.net"`
 	ClassinVirtualAccount string `json:"classin_virtual_account,omitempty" example:"biglytics.net"`
@@ -82,6 +83,7 @@ type ContactsResponseProperty struct {
 	HsLatestSource1       string `json:"hs_latest_source_1"`
 	HsLatestSource2       string `json:"hs_latest_source_2"`
 	HubspotOwnerId        string `json:"hubspot_owner_id"`
+	LDBAccount            string `json:"ldb_account"` // Phone sign in on ldb
 }
 
 // AssociatedCompany object
