@@ -30,6 +30,7 @@ type ContactsRequestProperty struct {
 	DigitalTrackingStg    string `json:"digital_tracking,omitempty" example:"biglytics.net"`
 	DigitalTrackingProd   string `json:"doi_chi_vy_dat_ten,omitempty" example:"biglytics.net"`
 	HubspotOwnerId        string `json:"hubspot_owner_id,omitempty"  example:"biglytics.net"`
+	CSOwner               string `json:"cs_owner,omitempty"  example:"2"`
 }
 
 // ContactsResponse object
@@ -84,6 +85,7 @@ type ContactsResponseProperty struct {
 	HsLatestSource2       string `json:"hs_latest_source_2"`
 	HubspotOwnerId        string `json:"hubspot_owner_id"`
 	LDBAccount            string `json:"ldb_account"` // Phone sign in on ldb
+	CSOwner               string `json:"cs_owner"`    // id cs owner
 }
 
 // AssociatedCompany object

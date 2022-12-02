@@ -76,6 +76,7 @@ type Client interface {
 	Notes() Notes
 	Forms() Forms
 	Engagements() Engagements
+	Owners() Owners
 }
 
 // NewClient constructor
