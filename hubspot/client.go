@@ -77,6 +77,7 @@ type Client interface {
 	Forms() Forms
 	Engagements() Engagements
 	Owners() Owners
+	Tickets() Tickets
 }
 
 // NewClient constructor
