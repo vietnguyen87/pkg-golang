@@ -138,3 +138,17 @@ func (c *ContactsTestSuite) TestGet() {
 		c.Suite.NotEqual(contact.Properties.Firstname, "")
 	})
 }
+
+func (c *ContactsTestSuite) TestGetByIds() {
+	c.Run("Test update contact successful", func() {
+		contact, _ := c.client.Contacts().GetByIds([]string{"83401"})
+		c.Suite.Equal(contact.Results[0].Id, "83401")
+	})
+}
+
+func (c *ContactsTestSuite) TestGetAssociate() {
+	c.Run("Test update contact successful", func() {
+		contact, _ := c.client.Contacts().GetAssociate("83401", "ticket")
+		c.Suite.Equal(contact.Results[0].ToObjectId, "1328410192")
+	})
+}
