@@ -38,7 +38,7 @@ card.SetHeader(googlechat.Header{
 })
 ```
 
-Add Widgets: TextParagraph, TextParagraph, Divider, ButtonList
+Add Widgets: DecoratedText, TextParagraph, Divider, ButtonList
 
 ```go
 //Define widget
