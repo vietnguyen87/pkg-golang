@@ -213,18 +213,3 @@ type ContactAssociateResponse struct {
 	UpdatedAt  string                     `json:"updatedAt"`
 	Archived   bool                       `json:"archived"`
 }
-
-type ContactGetAssociateResponse struct {
-	Results []GetAssociateResponse `json:"results"`
-}
-
-type GetAssociateResponse struct {
-	ToObjectId       int                `json:"toObjectId"`
-	AssociationTypes []AssociationTypes `json:"associationTypes"`
-}
-
-type AssociationTypes struct {
-	Category string      `json:"category"`
-	TypeId   int         `json:"typeId"`
-	Label    interface{} `json:"label"`
-}
