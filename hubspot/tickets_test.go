@@ -26,3 +26,10 @@ func (c *TicketsTestSuite) TestGet() {
 		c.Suite.Equal(ticket.Properties.HubspotOwnerId, "187299234")
 	})
 }
+
+func (c *TicketsTestSuite) TestGetAssociate() {
+	c.Run("Test get associate successful", func() {
+		contact, _ := c.client.Tickets().GetAssociate("1328410192", "contact")
+		c.Suite.Equal(contact.Results[0].ToObjectId, 83401)
+	})
+}

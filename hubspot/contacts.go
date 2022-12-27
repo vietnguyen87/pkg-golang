@@ -15,7 +15,7 @@ type Contacts interface {
 	Delete(contactID string) error
 	Associate(contactId, toObjectType, toObjectId, associationType string) (ContactAssociateResponse, error)
 	GetList(after, limit string) (GetListContactResponse, error)
-	GetAssociate(contactId, associationType string) (ContactGetAssociateResponse, error)
+	GetAssociate(contactId, associationType string) (GetAssociateResponse, error)
 }
 type contacts struct {
 	client
@@ -168,8 +168,8 @@ func (c *contacts) Associate(contactId, toObjectType, toObjectId, associationTyp
 	return r, err
 }
 
-func (c *contacts) GetAssociate(contactId, associationType string) (ContactGetAssociateResponse, error) {
-	r := ContactGetAssociateResponse{}
+func (c *contacts) GetAssociate(contactId, associationType string) (GetAssociateResponse, error) {
+	r := GetAssociateResponse{}
 	err := c.client.request("GET",
 		fmt.Sprintf("/crm/v4/objects/contacts/%s/associations/%s",
 			contactId,
