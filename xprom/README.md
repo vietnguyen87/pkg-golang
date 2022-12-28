@@ -15,65 +15,55 @@ Simply run:
 - Adds a `path` label to get the matched route
 - Ability to ignore routes
 
+## Interfaces 
+
+```go 
+type Measurer interface {
+	GinMiddleware(e *gin.Engine)
+}
+
+```
+
 ## Usage
 
 ```go
 package main
 
 import (
-	"github.com/Depado/ginprom"
-	"github.com/gin-gonic/gin"
+	"gitlab.marathon.edu.vn/pkg/go/xprom"
 )
 
 func main() {
-	r := gin.Default()
-	p := ginprom.New(
-		ginprom.Engine(r),
-		ginprom.Subsystem("gin"),
-		ginprom.Path("/metrics"),
-	)
-	r.Use(p.Instrument())
+	router := gin.New()
 
-	r.GET("/hello/:id", func(c *gin.Context) {})
-	r.GET("/world/:id", func(c *gin.Context) {})
-	r.Run("127.0.0.1:8080")
+	measurer := xprom.New(
+		xprom.Namespace("mrt"),
+		xprom.ListenAddress(fmt.Sprintf(":%s", config.GetPrometheusConfig().MetricPort)),
+		xprom.Ignore("/metrics", "/ping", "/swagger/*any"),
+		xprom.Subsystem("example_service"),
+	)
+
+	//Prometheus Include Recovery
+	measurer.GinMiddleware(router)
 }
 ```
-
-## Options
-
-### Custom gauges
-
-Add custom gauges to add own values to the metrics
-
-```go
-r := gin.New()
-p := ginprom.New(
-	ginprom.Engine(r),
-)
-p.AddCustomGauge("custom", "Some help text to provide", []string{"label"})
-r.Use(p.Instrument())
-```
-
-Save `p` and use the following functions:
-
-- IncrementGaugeValue
-- DecrementGaugeValue
-- SetGaugeValue
 
 ### Path
 
 Override the default path (`/metrics`) on which the metrics can be accessed:
 
 ```go
-r := gin.New()
-p := ginprom.New(
-	ginprom.Engine(r),
-	ginprom.Path("/custom/metrics"),
-)
 
-p.SetListenAddress(fmt.Sprintf(":%s", config.GetPrometheusConfig().MetricPort))
-p.Use(r)
+func main() {
+    router := gin.New()
+    
+    measurer := xprom.New(
+        xprom.Path("/custom/metrics"),
+    )
+    
+    //Prometheus Include Recovery
+    measurer.GinMiddleware(router)
+}
 ```
 
 ### Namespace
@@ -81,14 +71,18 @@ p.Use(r)
 Override the default namespace (`gin`):
 
 ```go
-r := gin.New()
-p := ginprom.New(
-	ginprom.Engine(r),
-	ginprom.Namespace("custom_ns"),
-)
 
-p.SetListenAddress(fmt.Sprintf(":%s", config.GetPrometheusConfig().MetricPort))
-p.Use(r)
+
+func main() {
+    router := gin.New()
+    
+    measurer := xprom.New(
+        ginprom.Namespace("mrt"),
+    )
+    
+    //Prometheus Include Recovery
+    measurer.GinMiddleware(router)
+}
 ```
 
 ### Subsystem
@@ -96,40 +90,34 @@ p.Use(r)
 Override the default (`gonic`) subsystem:
 
 ```go
-r := gin.New()
-p := ginprom.New(
-	ginprom.Engine(r),
-	ginprom.Subsystem("your_subsystem"),
-)
-
-p.SetListenAddress(fmt.Sprintf(":%s", config.GetPrometheusConfig().MetricPort))
-p.Use(r)
+func main() {
+    router := gin.New()
+    
+    measurer := xprom.New(
+        ginprom.Subsystem("example_service"),
+    )
+    
+    //Prometheus Include Recovery
+    measurer.GinMiddleware(router)
+}
 ```
 
 ### Engine
 
-The preferred way to pass the router to ginprom:
+The preferred way to pass the router to xprom:
 
 ```go
-r := gin.New()
-p := ginprom.New(
-	ginprom.Engine(r),
-)
-
-p.SetListenAddress(fmt.Sprintf(":%s", config.GetPrometheusConfig().MetricPort))
-p.Use(r)
-```
-
-The alternative being to call the `Use` method after initialization:
-
-```go
-p := ginprom.New()
-// ...
-r := gin.New()
-
-p.SetListenAddress(fmt.Sprintf(":%s", config.GetPrometheusConfig().MetricPort))
-p.Use(r)
-
+func main() {
+    measurer := xprom.New(
+        xprom.Namespace("mrt"),
+        xprom.ListenAddress(fmt.Sprintf(":%s", config.GetPrometheusConfig().MetricPort)),
+        xprom.Ignore("/metrics", "/ping", "/swagger/*any"),
+        xprom.Subsystem("example_service"),
+    )
+    
+    //Prometheus Include Recovery
+    measurer.GinMiddleware(router)
+}
 ```
 
 ### Prometheus Registry
@@ -231,17 +219,7 @@ p.Use(r)
 
 Make sure you have set the `gin.Engine` in the `ginprom` middleware, either when
 initializing it using `ginprom.New(ginprom.Engine(r))` or using the `Use`
-function after the initialization like this :
-
-```go
-p := ginprom.New(
-	ginprom.Namespace("gin"),
-	ginprom.Subsystem("gonic"),
-	ginprom.Path("/metrics"),
-)
-p.Use(r)
-r.Use(p.Instrument())
-```
+function after the initialization.
 
 By design, if the middleware was to panic, it would do so when a route is
 called. That's why it just silently fails when no engine has been set.
