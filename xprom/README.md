@@ -6,7 +6,7 @@ Forked from https://github.com/Depado/ginprom
 ## Install
 
 Simply run:
-`go get -u github.com/Depado/ginprom`
+`add go.mod gitlab.marathon.edu.vn/pkg/go v1.0.56`
 
 ## Differences with go-gin-prometheus
 
