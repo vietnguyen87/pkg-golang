@@ -15,13 +15,12 @@ import (
 )
 
 const (
-	Host                  = "https://api.eeo.cn"
-	DefaultPasswordSuffix = "@Marathon"
-	Country               = "0065"
-	SID1                  = "37216036"
-	Secret1               = "6G91jkn4"
-	SID2                  = "37333936"
-	Secret2               = "6rDUcTJu"
+	Host    = "https://api.eeo.cn"
+	Country = "0065"
+	SID1    = "37216036"
+	Secret1 = "6G91jkn4"
+	SID2    = "37333936"
+	Secret2 = "6rDUcTJu"
 )
 
 type ClientConfig struct {

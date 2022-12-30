@@ -9,14 +9,14 @@ import (
 	"time"
 
 	"github.com/google/go-querystring/query"
-	"gitlab.marathon.edu.vn/pkg/go/xcontext"
+	"github.com/vietnguyen87/pkg/go/xcontext"
 )
 
 const (
 	defaultTimeout       = 30 * time.Second
 	defaultLogBodyLength = 3000
-	defaultNamespace     = "marathon"
-	defaultSubsystem     = "marathon"
+	defaultNamespace     = "your_namespace"
+	defaultSubsystem     = "your_sub_system"
 )
 
 type Client interface {

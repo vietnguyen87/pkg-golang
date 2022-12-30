@@ -25,3 +25,9 @@ mocks/
 # Configuration file
 .env
 config.yaml
+
+#Classin
+classin/
+
+#Hubspot
+hubspot/

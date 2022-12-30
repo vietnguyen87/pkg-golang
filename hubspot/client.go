@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin/binding"
-	"gitlab.marathon.edu.vn/pkg/go/hubspot/builder"
+	"github.com/vietnguyen87/pkg/go/hubspot/builder"
 	"io"
 	"io/ioutil"
 	"net/http"

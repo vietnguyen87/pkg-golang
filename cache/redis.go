@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/go-redis/redis/v8"
-	"gitlab.marathon.edu.vn/pkg/go/xerrors"
-	"gitlab.marathon.edu.vn/pkg/go/xredis"
+	"github.com/vietnguyen87/pkg/go/xerrors"
+	"github.com/vietnguyen87/pkg/go/xredis"
 )
 
 const (

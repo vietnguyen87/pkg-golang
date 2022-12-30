@@ -1,10 +1,8 @@
 # go
 
-The pkg/go project contains Go's common packages wrappers. These packages will help you accelerate your software development process - Golang Common Packages.
+The pkg/go project contains Go's common packages wrappers. These packages will help you accelerate your software development process - Golang Common Packages.
 
 ## Getting started
-
-export GOPRIVATE="gitlab.marathon.edu.vn"
 
 ## Add your files
 
@@ -13,14 +11,14 @@ export GOPRIVATE="gitlab.marathon.edu.vn"
 
 ```
 cd existing_repo
-git remote add origin https://gitlab.marathon.edu.vn/pkg/go.git
+git remote add origin https://github.com/vietnguyen87/pkg/go.git
 git branch -M main
 git push -uf origin main
 ```
 
 ## Integrate with your tools
 
-- [ ] [Set up project integrations](https://gitlab.marathon.edu.vn/pkg/go/-/settings/integrations)
+- [ ] [Set up project integrations](https://github.com/vietnguyen87/pkg/go/-/settings/integrations)
 
 ## Collaborate with your team
 

@@ -4,8 +4,7 @@ Google Chat supply feature send notification.
 
 ## Install
 
-From version v1.0.58:
-`go get gitlab.marathon.edu.vn/pkg/go`
+`go get github.com/vietnguyen87/pkg/go`
 
 ## Usage
 
@@ -13,7 +12,7 @@ From version v1.0.58:
 package main
 
 import (   dsgjksdlgjskdlg 
-	"gitlab.marathon.edu.vn/pkg/go/googlechat"
+	"github.com/vietnguyen87/pkg/go/googlechat"
 )
 
 func main() {

@@ -1,4 +1,4 @@
-module gitlab.marathon.edu.vn/pkg/go
+module github.com/vietnguyen87/pkg/go
 
 go 1.18
 

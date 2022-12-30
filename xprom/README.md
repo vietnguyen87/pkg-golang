@@ -6,7 +6,7 @@ Forked from https://github.com/Depado/ginprom
 ## Install
 
 Simply run:
-`add go.mod gitlab.marathon.edu.vn/pkg/go v1.0.56`
+`add go.mod github.com/vietnguyen87/pkg/go`
 
 ## Differences with go-gin-prometheus
 
@@ -30,14 +30,14 @@ type Measurer interface {
 package main
 
 import (
-	"gitlab.marathon.edu.vn/pkg/go/xprom"
+	"github.com/vietnguyen87/pkg/go/xprom"
 )
 
 func main() {
 	router := gin.New()
 
 	measurer := xprom.New(
-		xprom.Namespace("mrt"),
+		xprom.Namespace("vietnt"),
 		xprom.ListenAddress(fmt.Sprintf(":%s", config.GetPrometheusConfig().MetricPort)),
 		xprom.Ignore("/metrics", "/ping", "/swagger/*any"),
 		xprom.Subsystem("example_service"),
@@ -77,7 +77,7 @@ func main() {
     router := gin.New()
     
     measurer := xprom.New(
-        ginprom.Namespace("mrt"),
+        ginprom.Namespace("vietnt"),
     )
     
     //Prometheus Include Recovery
@@ -109,7 +109,7 @@ The preferred way to pass the router to xprom:
 ```go
 func main() {
     measurer := xprom.New(
-        xprom.Namespace("mrt"),
+        xprom.Namespace("vietnt"),
         xprom.ListenAddress(fmt.Sprintf(":%s", config.GetPrometheusConfig().MetricPort)),
         xprom.Ignore("/metrics", "/ping", "/swagger/*any"),
         xprom.Subsystem("example_service"),

@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 	"github.com/gin-gonic/gin/binding"
-	"gitlab.marathon.edu.vn/pkg/go/xhttp"
-	"gitlab.marathon.edu.vn/pkg/go/zalo/schema"
+	"github.com/vietnguyen87/pkg/go/xhttp"
+	"github.com/vietnguyen87/pkg/go/zalo/schema"
 	"net/url"
 	"strconv"
 )
