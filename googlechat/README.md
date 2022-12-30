@@ -4,7 +4,7 @@ Google Chat supply feature send notification.
 
 ## Install
 
-`go get github.com/vietnguyen87/pkg/go`
+`go get github.com/vietnguyen87/pkg-golang`
 
 ## Usage
 

@@ -6,7 +6,7 @@ Forked from https://github.com/Depado/ginprom
 ## Install
 
 Simply run:
-`add go.mod github.com/vietnguyen87/pkg/go`
+`add go.mod github.com/vietnguyen87/pkg-golang`
 
 ## Differences with go-gin-prometheus
 

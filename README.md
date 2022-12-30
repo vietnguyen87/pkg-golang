@@ -7,4 +7,4 @@ The pkg/go project contains Go's common packages wrappers. These packages will h
 ## Install
 
 Simply run:
-`go get github.com/vietnguyen87/pkg/go`
+`go get github.com/vietnguyen87/pkg-golang`
