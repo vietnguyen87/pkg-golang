@@ -30,7 +30,7 @@ type Measurer interface {
 package main
 
 import (
-	"github.com/vietnguyen87/pkg/go/xprom"
+	"github.com/vietnguyen87/pkg-golang/xprom"
 )
 
 func main() {

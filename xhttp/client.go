@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/google/go-querystring/query"
-	"github.com/vietnguyen87/pkg/go/xcontext"
+	"github.com/vietnguyen87/pkg-golang/xcontext"
 )
 
 const (

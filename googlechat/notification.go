@@ -2,7 +2,7 @@ package googlechat
 
 import (
 	"context"
-	"github.com/vietnguyen87/pkg/go/xhttp"
+	"github.com/vietnguyen87/pkg-golang/xhttp"
 )
 
 func SendMessageTemplate(ctx context.Context, chatGroupUrl string, data interface{}) {

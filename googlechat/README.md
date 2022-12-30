@@ -12,7 +12,7 @@ Google Chat supply feature send notification.
 package main
 
 import (   dsgjksdlgjskdlg 
-	"github.com/vietnguyen87/pkg/go/googlechat"
+	"github.com/vietnguyen87/pkg-golang/googlechat"
 )
 
 func main() {

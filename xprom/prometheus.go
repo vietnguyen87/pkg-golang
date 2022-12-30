@@ -6,7 +6,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	logger "github.com/vietnguyen87/pkg/go/xlogger"
+	logger "github.com/vietnguyen87/pkg-golang/xlogger"
 	"net/http"
 	"runtime/debug"
 	"strconv"
