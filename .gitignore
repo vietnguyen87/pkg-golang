@@ -27,7 +27,7 @@ mocks/
 config.yaml
 
 #Classin
-classin/
+classin/*
 
 #Hubspot
-hubspot/
+hubspot/*
